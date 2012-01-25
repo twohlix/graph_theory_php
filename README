@@ -1,0 +1,5 @@
+This project provides PHP helpers and classes for Graph Theory operations
+
+This is not a graph as in charts project, it is the math version that uses Nodes and Edges.
+
+Why? Everything can be described a graph and since graphs have proven to be so useful in the rest of computing (trees are subset of graphs) I figured I'd make some helpers as I had a hard time finding any.
