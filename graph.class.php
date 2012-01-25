@@ -19,7 +19,7 @@ class Graph {
   }
 
   public function debug(){
-    echo '\n'.print_r($this->adj_mat, true);
+    echo "\n".print_r($this->adj_mat, true);
   }
 
   private static function validateName($name){
