@@ -13,9 +13,13 @@
 
 class Graph {
   private $adj_mat;
+  private $edges;
+  private $nodes;
 
   function __construct(){
     $this->adj_mat = array();
+    $this->edges = 0;
+    $this->nodes = 0;
   }
 
   public function debug(){
@@ -41,6 +45,7 @@ class Graph {
 
     if(!isset($this->adj_mat[$name])){
       $this->adj_mat[$name] = array();
+      $this->nodes++;
     }
   }
 
@@ -48,8 +53,18 @@ class Graph {
     return isset($this->adj_mat[$name]);
   }
 
+  public function nodeCount(){
+    return $this->nodes;
+  }
+
   public function edgeExists($start, $end){
     return $this->getEdge($start, $end) !== FALSE;
+  }
+
+  public function edgeCount($directed=TRUE){
+    if(!$directed) return $this->edges / 2;    
+
+    return $this->edges; 
   }
 
   public function getEdge($start, $end){
@@ -71,9 +86,12 @@ class Graph {
     }
 
     if( $this->nodeExists($start) && $this->nodeExists($end) ){
+      if(!isset($this->adj_mat[$start][$end])) $this->edges++;
       $this->adj_mat[$start][$end] = $weight;
-      if(!$directed) 
+      if(!$directed){
+        if(!isset($this->adj_mat[$end][$start])) $this->edges++;
         $this->adj_mat[$end][$start] = $weight;
+      }
 
       return TRUE;
     }
@@ -88,10 +106,16 @@ class Graph {
     }
 
     if( $this->nodeExists($start) && $this->nodeExists($end) ){
-      if(isset($this->adj_mat[$start][$end])) unset($this->adj_mat[$start][$end]);
+      if(isset($this->adj_mat[$start][$end])){
+        unset($this->adj_mat[$start][$end]);
+        $this->edges--;      
+      }
 
       if(!$directed){
-        if(isset($this->adj_mat[$end][$start])) unset($this->adj_mat[$end][$start]);
+        if(isset($this->adj_mat[$end][$start])){
+          unset($this->adj_mat[$end][$start]);
+          $this->edges--;
+        }
       }
   
       return TRUE;

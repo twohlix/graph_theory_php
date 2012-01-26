@@ -25,4 +25,13 @@ if($pass){
   echo "\n\tFailed!\n";
 }
 
+//check on node count
+if( $theGraph->nodeCount() != 3 ){
+  echo "FAIL: Node Count is $theGraph->nodeCount(). Expected 3";  
+}
+
+if( $theGraph->edgeCount(FALSE) != 1 ){
+  echo "FAIL: Edge Count is $theGraph->edgeCount(FALSE). Expected 1";
+}
+
 //$theGraph->debug();
