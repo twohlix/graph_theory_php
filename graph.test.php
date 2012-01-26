@@ -31,7 +31,18 @@ if( $theGraph->nodeCount() != 3 ){
 }
 
 if( $theGraph->edgeCount(FALSE) != 1 ){
-  echo "FAIL: Edge Count is $theGraph->edgeCount(FALSE). Expected 1";
+  echo "FAIL: Edge Count is ".$theGraph->edgeCount(FALSE).". Expected 1";
+}
+
+
+//remove node c
+$theGraph->removeNode('c', FALSE);
+if( $theGraph->nodeCount() != 2 ){
+  echo "FAIL: Node count is $theGraph->nodeCount(). Expected 2";
+}
+
+if( $theGraph->edgeCount(FALSE) != 0 ){
+  echo "FAIL: Edge count is ".$theGraph->edgeCount(FALSE).". Expected 0";
 }
 
 //$theGraph->debug();

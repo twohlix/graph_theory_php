@@ -38,6 +38,8 @@ class Graph {
     return TRUE;
   }
 
+  //NODE OPERATIONS//////////////////////////////////////
+
   public function addNode($name){
     if(!self::validateName($name)){
       return FALSE;
@@ -56,6 +58,33 @@ class Graph {
   public function nodeCount(){
     return $this->nodes;
   }
+
+  public function removeNode($name, $directed=TRUE){
+    if(!self::validateName($name)){
+      return FALSE;
+    }
+
+    if(!$this->nodeExists($name)){
+      return FALSE;
+    }
+
+    foreach($this->adj_mat[$name] as $node => $list ){
+      $this->removeEdge($name, $node, $directed);
+    } 
+    
+    //do the final cleanup pass through ESPECIALLY if its directed
+    foreach($this->adj_mat as $n => $list){
+      if( $n == $name ) continue;
+
+      $this->removeEdge($n, $name, TRUE); 
+    }
+
+    unset($this->adj_mat[$name]);//leave this for the end since we need it for removeEdge();
+    $this->nodes--;
+
+  }
+
+  //EDGE OPERATIONS//////////////////////////////////////
 
   public function edgeExists($start, $end){
     return $this->getEdge($start, $end) !== FALSE;
@@ -78,7 +107,6 @@ class Graph {
 
     return FALSE;
   }
-
   
   public function addEdge($start, $end, $directed=TRUE, $weight=1){
     if(!self::validateName($start) || !self::validateName($end)){
@@ -98,7 +126,6 @@ class Graph {
 
     return FALSE;
   }
-
 
   public function removeEdge($start, $end, $directed=TRUE){
     if( !self::validateName($start) || !self::validateName($end) ){
