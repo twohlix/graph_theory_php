@@ -84,6 +84,42 @@ class Graph {
 
   }
 
+  public function degree($name){
+    if(!self::validateName($name)){
+      return FALSE;
+    }
+
+    if(!$this->nodeExists($name)){
+      return FALSE;
+    }
+
+    return count($this->adj_mat[$name]);
+  }
+
+  public function outDegree($name){
+    return $this->degree($name);
+  }
+
+  public function inDegree($name){
+    if(!self::validateName($name)){
+      return FALSE;
+    }
+
+    if(!$this->nodeExists($name)){
+      return FALSE;
+    }
+
+    //expensive operation, go through all nodes but this one
+    $inDegree = 0;
+    foreach($this->adj_mat as $n => $list){
+      if($n == $name) continue;
+
+      if($this->edgeExists($n, $name)) $inDegree++;
+    }
+
+    return $inDegree;
+  }
+
   //EDGE OPERATIONS//////////////////////////////////////
 
   public function edgeExists($start, $end){

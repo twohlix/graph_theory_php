@@ -34,6 +34,17 @@ if( $theGraph->edgeCount(FALSE) != 1 ){
   echo "FAIL: Edge Count is ".$theGraph->edgeCount(FALSE).". Expected 1";
 }
 
+//check on degree
+if( $theGraph->degree('b') != 1 ){
+  echo "FAIL: Degree of 'b' is ".$theGraph->degree('b').". Expected 1";
+}
+if( $theGraph->degree('a') != 0 ){
+  echo "FAIL: Degree of 'a' is ".$theGraph->degree('a').". Expected 0";
+}
+if( $theGraph->inDegree('c') != 1 ){
+  echo "FAIL: In Degree of 'c' is ".$theGraph->inDegree('c').". Expected 1";
+}
+
 
 //remove node c
 $theGraph->removeNode('c', FALSE);
